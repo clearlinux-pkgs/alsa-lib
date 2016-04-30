@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.0
-Release  : 3
+Release  : 4
 URL      : http://alsa.cybermirror.org/lib/alsa-lib-1.1.0.tar.bz2
 Source0  : http://alsa.cybermirror.org/lib/alsa-lib-1.1.0.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
