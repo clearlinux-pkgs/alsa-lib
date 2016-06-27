@@ -4,9 +4,9 @@
 #
 Name     : alsa-lib
 Version  : 1.1.0
-Release  : 4
-URL      : http://alsa.cybermirror.org/lib/alsa-lib-1.1.0.tar.bz2
-Source0  : http://alsa.cybermirror.org/lib/alsa-lib-1.1.0.tar.bz2
+Release  : 5
+URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.0.tar.bz2
+Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.0.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -61,10 +61,12 @@ lib components for the alsa-lib package.
 %setup -q -n alsa-lib-1.1.0
 
 %build
+export LANG=C
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
 %check
+export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
