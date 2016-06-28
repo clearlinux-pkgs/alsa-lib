@@ -1185,12 +1185,14 @@ libasound.so.2:snd_seq_client_info_event_filter_clear
 libasound.so.2:snd_seq_client_info_event_filter_del
 libasound.so.2:snd_seq_client_info_free
 libasound.so.2:snd_seq_client_info_get_broadcast_filter
+libasound.so.2:snd_seq_client_info_get_card
 libasound.so.2:snd_seq_client_info_get_client
 libasound.so.2:snd_seq_client_info_get_error_bounce
 libasound.so.2:snd_seq_client_info_get_event_filter
 libasound.so.2:snd_seq_client_info_get_event_lost
 libasound.so.2:snd_seq_client_info_get_name
 libasound.so.2:snd_seq_client_info_get_num_ports
+libasound.so.2:snd_seq_client_info_get_pid
 libasound.so.2:snd_seq_client_info_get_type
 libasound.so.2:snd_seq_client_info_malloc
 libasound.so.2:snd_seq_client_info_set_broadcast_filter
