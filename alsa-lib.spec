@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.2
-Release  : 7
+Release  : 8
 URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.2.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.2.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
@@ -262,14 +262,15 @@ rm -rf %{buildroot}
 /usr/include/alsa/use-case.h
 /usr/include/alsa/version.h
 /usr/include/sys/asoundlib.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libasound.so
+/usr/lib64/pkgconfig/alsa.pc
 /usr/share/aclocal/*.m4
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
 /usr/lib64/alsa-lib/smixer/smixer-ac97.so
 /usr/lib64/alsa-lib/smixer/smixer-hda.so
 /usr/lib64/alsa-lib/smixer/smixer-python.so
 /usr/lib64/alsa-lib/smixer/smixer-sbase.so
+/usr/lib64/libasound.so.2
+/usr/lib64/libasound.so.2.0.0
