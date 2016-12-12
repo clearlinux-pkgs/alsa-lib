@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.2
-Release  : 8
+Release  : 9
 URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.2.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.2.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
@@ -13,6 +13,11 @@ License  : GPL-2.0 LGPL-2.1
 Requires: alsa-lib-bin
 Requires: alsa-lib-lib
 Requires: alsa-lib-data
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : python-dev
 
 %description
@@ -48,6 +53,17 @@ Provides: alsa-lib-devel
 dev components for the alsa-lib package.
 
 
+%package dev32
+Summary: dev32 components for the alsa-lib package.
+Group: Default
+Requires: alsa-lib-lib32
+Requires: alsa-lib-bin
+Requires: alsa-lib-data
+
+%description dev32
+dev32 components for the alsa-lib package.
+
+
 %package lib
 Summary: lib components for the alsa-lib package.
 Group: Libraries
@@ -57,14 +73,33 @@ Requires: alsa-lib-data
 lib components for the alsa-lib package.
 
 
+%package lib32
+Summary: lib32 components for the alsa-lib package.
+Group: Default
+Requires: alsa-lib-data
+
+%description lib32
+lib32 components for the alsa-lib package.
+
+
 %prep
 %setup -q -n alsa-lib-1.1.2
+pushd ..
+cp -a alsa-lib-1.1.2 build32
+popd
 
 %build
 export LANG=C
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
+pushd ../build32/
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%configure --disable-static  --disable-python --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make V=1  %{?_smp_mflags}
+popd
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
@@ -74,10 +109,22 @@ make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
 rm -rf %{buildroot}
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do mv $i 32$i ; done
+popd
+fi
+popd
 %make_install
 
 %files
 %defattr(-,root,root,-)
+/usr/lib32/alsa-lib/smixer/smixer-ac97.so
+/usr/lib32/alsa-lib/smixer/smixer-hda.so
+/usr/lib32/alsa-lib/smixer/smixer-sbase.so
 
 %files bin
 %defattr(-,root,root,-)
@@ -266,6 +313,11 @@ rm -rf %{buildroot}
 /usr/lib64/pkgconfig/alsa.pc
 /usr/share/aclocal/*.m4
 
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libasound.so
+/usr/lib32/pkgconfig/32alsa.pc
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/alsa-lib/smixer/smixer-ac97.so
@@ -274,3 +326,8 @@ rm -rf %{buildroot}
 /usr/lib64/alsa-lib/smixer/smixer-sbase.so
 /usr/lib64/libasound.so.2
 /usr/lib64/libasound.so.2.0.0
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libasound.so.2
+/usr/lib32/libasound.so.2.0.0
