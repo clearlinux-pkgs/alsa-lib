@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.3
-Release  : 12
+Release  : 13
 URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.3.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.3.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
@@ -13,12 +13,20 @@ License  : GPL-2.0 LGPL-2.1
 Requires: alsa-lib-bin
 Requires: alsa-lib-lib
 Requires: alsa-lib-data
+BuildRequires : automake
+BuildRequires : automake-dev
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
+BuildRequires : gettext-bin
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
+BuildRequires : libtool
+BuildRequires : libtool-dev
+BuildRequires : m4
+BuildRequires : pkg-config-dev
 BuildRequires : python-dev
+Patch1: 0001-Support-a-stateless-configuration-by-default-using-P.patch
 
 %description
 You can place files named *.conf in this folder and they will be processed
@@ -85,31 +93,37 @@ lib32 components for the alsa-lib package.
 
 %prep
 %setup -q -n alsa-lib-1.1.3
+%patch1 -p1
 pushd ..
 cp -a alsa-lib-1.1.3 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-%configure --disable-static
+export SOURCE_DATE_EPOCH=1492711248
+%reconfigure --disable-static
 make V=1  %{?_smp_mflags}
-
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
-%configure --disable-static  --disable-python --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%reconfigure --disable-static  --disable-python --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
+
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1492711248
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -256,6 +270,7 @@ popd
 /usr/share/alsa/ucm/skylake-rt286/HiFi
 /usr/share/alsa/ucm/skylake-rt286/skylake-rt286.conf
 /usr/share/alsa/ucm/tegraalc5632/tegraalc5632.conf
+/usr/share/defaults/alsa/asound.conf
 
 %files dev
 %defattr(-,root,root,-)
