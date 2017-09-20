@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.4.1
-Release  : 16
+Release  : 18
 URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.4.1.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.4.1.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
@@ -25,7 +25,6 @@ BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : m4
 BuildRequires : pkg-config-dev
-BuildRequires : python-dev
 Patch1: 0001-Support-a-stateless-configuration-by-default-using-P.patch
 
 %description
@@ -103,15 +102,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1496407531
-%reconfigure --disable-static
+export SOURCE_DATE_EPOCH=1505936393
+%reconfigure --disable-static --disable-python
 make V=1  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
-%reconfigure --disable-static  --disable-python --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%reconfigure --disable-static --disable-python  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make V=1  %{?_smp_mflags}
 popd
 
@@ -123,7 +122,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1496407531
+export SOURCE_DATE_EPOCH=1505936393
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -226,7 +225,6 @@ popd
 /usr/share/alsa/pcm/surround50.conf
 /usr/share/alsa/pcm/surround51.conf
 /usr/share/alsa/pcm/surround71.conf
-/usr/share/alsa/smixer.conf
 /usr/share/alsa/sndo-mixer.alisp
 /usr/share/alsa/topology/broadwell/broadwell.conf
 /usr/share/alsa/topology/bxtrt298/bxt_i2s.conf
@@ -332,10 +330,6 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/alsa-lib/smixer/smixer-ac97.so
-/usr/lib64/alsa-lib/smixer/smixer-hda.so
-/usr/lib64/alsa-lib/smixer/smixer-python.so
-/usr/lib64/alsa-lib/smixer/smixer-sbase.so
 /usr/lib64/libasound.so.2
 /usr/lib64/libasound.so.2.0.0
 
