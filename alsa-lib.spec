@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.5
-Release  : 19
+Release  : 20
 URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.5.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.5.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
