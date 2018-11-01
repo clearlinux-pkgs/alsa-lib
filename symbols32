@@ -963,6 +963,7 @@ libasound.so.2:snd_pcm_info_set_device
 libasound.so.2:snd_pcm_info_set_stream
 libasound.so.2:snd_pcm_info_set_subdevice
 libasound.so.2:snd_pcm_info_sizeof
+libasound.so.2:snd_pcm_ioplug_avail
 libasound.so.2:snd_pcm_ioplug_create
 libasound.so.2:snd_pcm_ioplug_delete
 libasound.so.2:snd_pcm_ioplug_hw_avail

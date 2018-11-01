@@ -36,18 +36,6 @@ index 4f32662..0476a46 100644
 +
 +alsadefaultsdir = $(datadir)/defaults/alsa
 +alsadefaults_DATA = asound.conf
-diff --git a/src/conf/alsa.conf b/src/conf/alsa.conf
-index f22918f..c6c3673 100644
---- a/src/conf/alsa.conf
-+++ b/src/conf/alsa.conf
-@@ -15,6 +15,7 @@
- 					"/alsa.conf.d/"
- 				]
- 			}
-+			"/usr/share/defaults/alsa/asound.conf"
- 			"/etc/asound.conf"
- 			"~/.asoundrc"
- 		]
 diff --git a/src/conf/asound.conf b/src/conf/asound.conf
 new file mode 100644
 index 0000000..0da9682
@@ -70,3 +58,13 @@ index 0000000..0da9682
 -- 
 2.12.2
 
+--- alsa-lib-1.1.7/src/conf/alsa.conf~	2018-10-16 08:08:35.000000000 +0000
++++ alsa-lib-1.1.7/src/conf/alsa.conf	2018-11-01 01:27:00.299847974 +0000
+@@ -8,6 +8,7 @@
+ 	{
+ 		func load
+ 		files [
++			"/usr/share/defaults/alsa/asound.conf"
+ 			"/etc/alsa/conf.d"
+ 			"/etc/asound.conf"
+ 			"~/.asoundrc"
