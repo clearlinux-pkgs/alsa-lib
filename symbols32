@@ -745,6 +745,7 @@ libasound.so.2:snd_pcm_dump_sw_setup
 libasound.so.2:snd_pcm_extplug_create
 libasound.so.2:snd_pcm_extplug_delete
 libasound.so.2:snd_pcm_extplug_params_reset
+libasound.so.2:snd_pcm_extplug_set_param_link
 libasound.so.2:snd_pcm_extplug_set_param_list
 libasound.so.2:snd_pcm_extplug_set_param_minmax
 libasound.so.2:snd_pcm_extplug_set_slave_param_list
