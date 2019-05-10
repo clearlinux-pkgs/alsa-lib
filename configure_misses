@@ -9,3 +9,8 @@ Configure miss: debug assert
 Configure miss: softfloat
 Configure miss: use of wordexp
 Configure miss: resmgr support
+Configure miss: symbolic-functions
+Configure miss: debug assert
+Configure miss: softfloat
+Configure miss: use of wordexp
+Configure miss: resmgr support

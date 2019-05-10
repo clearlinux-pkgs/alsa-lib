@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.9
-Release  : 25
+Release  : 26
 URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.9.tar.bz2
 Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.9.tar.bz2
 Summary  : An alternative implementation of Linux sound support
@@ -110,13 +110,16 @@ license components for the alsa-lib package.
 pushd ..
 cp -a alsa-lib-1.1.9 build32
 popd
+pushd ..
+cp -a alsa-lib-1.1.9 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557492382
+export SOURCE_DATE_EPOCH=1557492688
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
@@ -132,6 +135,14 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 %reconfigure --disable-static --disable-python  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=haswell"
+export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+%reconfigure --disable-static --disable-python
+make  %{?_smp_mflags}
+popd
 
 %check
 export LANG=C
@@ -141,9 +152,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+cd ../buildavx2;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557492382
+export SOURCE_DATE_EPOCH=1557492688
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
 cp COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/COPYING
@@ -157,6 +170,9 @@ for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
 popd
+pushd ../buildavx2/
+%make_install_avx2
+popd
 %make_install
 
 %files
@@ -165,6 +181,7 @@ popd
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/aserver
+/usr/bin/haswell/aserver
 
 %files data
 %defattr(-,root,root,-)
@@ -450,6 +467,7 @@ popd
 /usr/include/alsa/use-case.h
 /usr/include/alsa/version.h
 /usr/include/sys/asoundlib.h
+/usr/lib64/haswell/libasound.so
 /usr/lib64/libasound.so
 /usr/lib64/pkgconfig/alsa.pc
 /usr/share/aclocal/*.m4
@@ -462,6 +480,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libasound.so.2
+/usr/lib64/haswell/libasound.so.2.0.0
 /usr/lib64/libasound.so.2
 /usr/lib64/libasound.so.2.0.0
 
