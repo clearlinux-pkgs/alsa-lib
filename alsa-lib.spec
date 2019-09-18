@@ -4,10 +4,10 @@
 #
 Name     : alsa-lib
 Version  : 1.1.9
-Release  : 26
-URL      : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.9.tar.bz2
-Source0  : ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.9.tar.bz2
-Summary  : An alternative implementation of Linux sound support
+Release  : 27
+URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.1.9.tar.bz2
+Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.1.9.tar.bz2
+Summary  : Advanced Linux Sound Architecture (ALSA) - Library
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: alsa-lib-bin = %{version}-%{release}
@@ -57,7 +57,6 @@ Requires: alsa-lib-lib = %{version}-%{release}
 Requires: alsa-lib-bin = %{version}-%{release}
 Requires: alsa-lib-data = %{version}-%{release}
 Provides: alsa-lib-devel = %{version}-%{release}
-Requires: alsa-lib = %{version}-%{release}
 Requires: alsa-lib = %{version}-%{release}
 
 %description dev
@@ -118,8 +117,9 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557492688
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1568830111
+export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
@@ -129,9 +129,9 @@ make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %reconfigure --disable-static --disable-python  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
@@ -145,7 +145,7 @@ make  %{?_smp_mflags}
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -156,7 +156,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557492688
+export SOURCE_DATE_EPOCH=1568830111
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
 cp COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/COPYING
@@ -428,7 +428,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
 /usr/include/alsa/asoundef.h
 /usr/include/alsa/asoundlib.h
 /usr/include/alsa/conf.h
@@ -466,6 +465,7 @@ popd
 /usr/include/alsa/topology.h
 /usr/include/alsa/use-case.h
 /usr/include/alsa/version.h
+/usr/include/asoundlib.h
 /usr/include/sys/asoundlib.h
 /usr/lib64/haswell/libasound.so
 /usr/lib64/libasound.so
