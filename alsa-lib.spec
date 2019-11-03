@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.1.9
-Release  : 27
+Release  : 28
 URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.1.9.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.1.9.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
