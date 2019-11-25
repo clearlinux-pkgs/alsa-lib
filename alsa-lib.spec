@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.2.1.1
-Release  : 29
+Release  : 30
 URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.1.1.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.1.1.tar.bz2
 Summary  : An alternative implementation of Linux sound support
