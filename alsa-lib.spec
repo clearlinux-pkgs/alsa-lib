@@ -4,7 +4,7 @@
 #
 Name     : alsa-lib
 Version  : 1.2.2
-Release  : 32
+Release  : 33
 URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.2.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.2.tar.bz2
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
@@ -14,6 +14,7 @@ Requires: alsa-lib-bin = %{version}-%{release}
 Requires: alsa-lib-data = %{version}-%{release}
 Requires: alsa-lib-lib = %{version}-%{release}
 Requires: alsa-lib-license = %{version}-%{release}
+Requires: alsa-ucm-conf-data
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : gcc-dev32
@@ -119,7 +120,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582577654
+export SOURCE_DATE_EPOCH=1583518738
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
@@ -157,7 +158,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1582577654
+export SOURCE_DATE_EPOCH=1583518738
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
 cp %{_builddir}/alsa-lib-1.2.2/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/597bf5f9c0904bd6c48ac3a3527685818d11246d
