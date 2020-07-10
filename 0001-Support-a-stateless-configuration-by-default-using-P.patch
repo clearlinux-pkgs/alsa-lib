@@ -1,4 +1,4 @@
-From 459f8ba53f841c3777f727e9ea0128ee08b3ed43 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Ikey Doherty <michael.i.doherty@intel.com>
 Date: Thu, 20 Apr 2017 18:54:59 +0100
 Subject: [PATCH] Support a stateless configuration by default, using
@@ -12,6 +12,7 @@ Users can still override this configuration through the typical /etc/ and
 ~/ paths.
 
 Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  src/conf/Makefile.am |  5 ++++-
  src/conf/alsa.conf   |  1 +
@@ -20,10 +21,10 @@ Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
  create mode 100644 src/conf/asound.conf
 
 diff --git a/src/conf/Makefile.am b/src/conf/Makefile.am
-index 4f32662..0476a46 100644
+index b82591a..e171bb7 100644
 --- a/src/conf/Makefile.am
 +++ b/src/conf/Makefile.am
-@@ -17,8 +17,11 @@ cfg_files += smixer.conf
+@@ -10,8 +10,11 @@ cfg_files += smixer.conf
  endif
  endif
  
@@ -36,9 +37,21 @@ index 4f32662..0476a46 100644
 +
 +alsadefaultsdir = $(datadir)/defaults/alsa
 +alsadefaults_DATA = asound.conf
+diff --git a/src/conf/alsa.conf b/src/conf/alsa.conf
+index a04173a..45c6ff1 100644
+--- a/src/conf/alsa.conf
++++ b/src/conf/alsa.conf
+@@ -8,6 +8,7 @@
+ 	{
+ 		func load
+ 		files [
++			"/usr/share/defaults/alsa/asound.conf"
+ 			"/usr/etc/alsa/conf.d"
+ 			"/etc/alsa/conf.d"
+ 			"/etc/asound.conf|||/usr/etc/asound.conf"
 diff --git a/src/conf/asound.conf b/src/conf/asound.conf
 new file mode 100644
-index 0000000..0da9682
+index 0000000..81f82fd
 --- /dev/null
 +++ b/src/conf/asound.conf
 @@ -0,0 +1,12 @@
@@ -54,17 +67,3 @@ index 0000000..0da9682
 +ctl.!default {
 +    type pulse
 +}
-\ No newline at end of file
--- 
-2.12.2
-
---- alsa-lib-1.1.7/src/conf/alsa.conf~	2018-10-16 08:08:35.000000000 +0000
-+++ alsa-lib-1.1.7/src/conf/alsa.conf	2018-11-01 01:27:00.299847974 +0000
-@@ -8,6 +8,7 @@
- 	{
- 		func load
- 		files [
-+			"/usr/share/defaults/alsa/asound.conf"
- 			"/etc/alsa/conf.d"
- 			"/etc/asound.conf"
- 			"~/.asoundrc"
