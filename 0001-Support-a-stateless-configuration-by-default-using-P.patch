@@ -21,7 +21,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  create mode 100644 src/conf/asound.conf
 
 diff --git a/src/conf/Makefile.am b/src/conf/Makefile.am
-index b82591a..e171bb7 100644
+index e7bcbbe..0f154aa 100644
 --- a/src/conf/Makefile.am
 +++ b/src/conf/Makefile.am
 @@ -10,8 +10,11 @@ cfg_files += smixer.conf
@@ -38,7 +38,7 @@ index b82591a..e171bb7 100644
 +alsadefaultsdir = $(datadir)/defaults/alsa
 +alsadefaults_DATA = asound.conf
 diff --git a/src/conf/alsa.conf b/src/conf/alsa.conf
-index a04173a..45c6ff1 100644
+index e65bf2c..810cae2 100644
 --- a/src/conf/alsa.conf
 +++ b/src/conf/alsa.conf
 @@ -8,6 +8,7 @@
@@ -46,9 +46,9 @@ index a04173a..45c6ff1 100644
  		func load
  		files [
 +			"/usr/share/defaults/alsa/asound.conf"
+ 			"/var/lib/alsa/conf.d"
  			"/usr/etc/alsa/conf.d"
  			"/etc/alsa/conf.d"
- 			"/etc/asound.conf|||/usr/etc/asound.conf"
 diff --git a/src/conf/asound.conf b/src/conf/asound.conf
 new file mode 100644
 index 0000000..81f82fd

@@ -1,19 +1,22 @@
-Configure miss: symbolic-functions
 Configure miss: debug assert
-Configure miss: softfloat
-Configure miss: use of wordexp
-Configure miss: resmgr support
+Configure miss: debug assert
+Configure miss: debug assert
 Configure miss: default lockless dmix
+Configure miss: default lockless dmix
+Configure miss: default lockless dmix
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: resmgr support
+Configure miss: resmgr support
+Configure miss: resmgr support
+Configure miss: softfloat
+Configure miss: softfloat
+Configure miss: softfloat
+Configure miss: symbolic-functions
+Configure miss: symbolic-functions
+Configure miss: symbolic-functions
+Configure miss: use of wordexp
+Configure miss: use of wordexp
+Configure miss: use of wordexp
 Configure miss: whether a statically linked program can dlopen itself
-Configure miss: symbolic-functions
-Configure miss: debug assert
-Configure miss: softfloat
-Configure miss: use of wordexp
-Configure miss: resmgr support
-Configure miss: default lockless dmix
-Configure miss: symbolic-functions
-Configure miss: debug assert
-Configure miss: softfloat
-Configure miss: use of wordexp
-Configure miss: resmgr support
-Configure miss: default lockless dmix
