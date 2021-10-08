@@ -6,7 +6,7 @@
 #
 Name     : alsa-lib
 Version  : 1.2.5.1
-Release  : 39
+Release  : 40
 URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.5.1.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.5.1.tar.bz2
 Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.5.1.tar.bz2.sig
@@ -15,6 +15,7 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: alsa-lib-bin = %{version}-%{release}
 Requires: alsa-lib-data = %{version}-%{release}
+Requires: alsa-lib-filemap = %{version}-%{release}
 Requires: alsa-lib-lib = %{version}-%{release}
 Requires: alsa-lib-license = %{version}-%{release}
 Requires: alsa-ucm-conf-data
@@ -42,6 +43,7 @@ Summary: bin components for the alsa-lib package.
 Group: Binaries
 Requires: alsa-lib-data = %{version}-%{release}
 Requires: alsa-lib-license = %{version}-%{release}
+Requires: alsa-lib-filemap = %{version}-%{release}
 
 %description bin
 bin components for the alsa-lib package.
@@ -80,11 +82,20 @@ Requires: alsa-lib-dev = %{version}-%{release}
 dev32 components for the alsa-lib package.
 
 
+%package filemap
+Summary: filemap components for the alsa-lib package.
+Group: Default
+
+%description filemap
+filemap components for the alsa-lib package.
+
+
 %package lib
 Summary: lib components for the alsa-lib package.
 Group: Libraries
 Requires: alsa-lib-data = %{version}-%{release}
 Requires: alsa-lib-license = %{version}-%{release}
+Requires: alsa-lib-filemap = %{version}-%{release}
 
 %description lib
 lib components for the alsa-lib package.
@@ -124,16 +135,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623691607
+export SOURCE_DATE_EPOCH=1633735673
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$FFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CFLAGS="$CFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
 %reconfigure --disable-static --disable-python
 make  %{?_smp_mflags}
 pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
@@ -143,11 +154,11 @@ make  %{?_smp_mflags}
 popd
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=haswell"
-export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
-export FFLAGS="$FFLAGS -m64 -march=haswell"
-export FCFLAGS="$FCFLAGS -m64 -march=haswell"
-export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %reconfigure --disable-static --disable-python
 make  %{?_smp_mflags}
 popd
@@ -164,7 +175,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1623691607
+export SOURCE_DATE_EPOCH=1633735673
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
 cp %{_builddir}/alsa-lib-1.2.5.1/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/597bf5f9c0904bd6c48ac3a3527685818d11246d
@@ -177,9 +188,16 @@ pushd %{buildroot}/usr/lib32/pkgconfig
 for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+pushd %{buildroot}/usr/share/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
 popd
 pushd ../buildavx2/
-%make_install_avx2
+%make_install_v3
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 popd
 %make_install
 
@@ -189,7 +207,7 @@ popd
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/aserver
-/usr/bin/haswell/aserver
+/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -323,8 +341,6 @@ popd
 /usr/include/alsa/version.h
 /usr/include/asoundlib.h
 /usr/include/sys/asoundlib.h
-/usr/lib64/haswell/libasound.so
-/usr/lib64/haswell/libatopology.so
 /usr/lib64/libasound.so
 /usr/lib64/libatopology.so
 /usr/lib64/pkgconfig/alsa-topology.pc
@@ -340,16 +356,17 @@ popd
 /usr/lib32/pkgconfig/alsa-topology.pc
 /usr/lib32/pkgconfig/alsa.pc
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-alsa-lib
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/libasound.so.2
-/usr/lib64/haswell/libasound.so.2.0.0
-/usr/lib64/haswell/libatopology.so.2
-/usr/lib64/haswell/libatopology.so.2.0.0
 /usr/lib64/libasound.so.2
 /usr/lib64/libasound.so.2.0.0
 /usr/lib64/libatopology.so.2
 /usr/lib64/libatopology.so.2.0.0
+/usr/share/clear/optimized-elf/lib*
 
 %files lib32
 %defattr(-,root,root,-)
