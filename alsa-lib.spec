@@ -6,7 +6,7 @@
 #
 Name     : alsa-lib
 Version  : 1.2.6.1
-Release  : 44
+Release  : 45
 URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.6.1.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.6.1.tar.bz2
 Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.6.1.tar.bz2.sig
