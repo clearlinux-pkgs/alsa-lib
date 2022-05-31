@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x8380596DA6E59C91 (release@alsa-project.org)
 #
 Name     : alsa-lib
-Version  : 1.2.6.1
-Release  : 45
-URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.6.1.tar.bz2
-Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.6.1.tar.bz2
-Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.6.1.tar.bz2.sig
+Version  : 1.2.7
+Release  : 46
+URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.7.tar.bz2
+Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.7.tar.bz2
+Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.7.tar.bz2.sig
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -36,7 +36,7 @@ Patch1: 0001-Support-a-stateless-configuration-by-default-using-P.patch
 %description
 # alsa-lib
 ## Advanced Linux Sound Architecture (ALSA) project
-![Build alsa-lib](https://github.com/alsa-project/alsa-lib/workflows/Build%20alsa-lib/badge.svg?branch=master)
+[![Build alsa-lib](https://github.com/alsa-project/alsa-lib/workflows/Build%20alsa-lib/badge.svg?branch=master)](https://github.com/alsa-project/alsa-lib/actions/workflows/build.yml)
 
 %package bin
 Summary: bin components for the alsa-lib package.
@@ -120,14 +120,14 @@ license components for the alsa-lib package.
 
 
 %prep
-%setup -q -n alsa-lib-1.2.6.1
-cd %{_builddir}/alsa-lib-1.2.6.1
+%setup -q -n alsa-lib-1.2.7
+cd %{_builddir}/alsa-lib-1.2.7
 %patch1 -p1
 pushd ..
-cp -a alsa-lib-1.2.6.1 build32
+cp -a alsa-lib-1.2.7 build32
 popd
 pushd ..
-cp -a alsa-lib-1.2.6.1 buildavx2
+cp -a alsa-lib-1.2.7 buildavx2
 popd
 
 %build
@@ -135,12 +135,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1640643069
+export SOURCE_DATE_EPOCH=1654035374
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
 %reconfigure --disable-static --disable-python
 make  %{?_smp_mflags}
 pushd ../build32/
@@ -175,11 +175,11 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1640643069
+export SOURCE_DATE_EPOCH=1654035374
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
-cp %{_builddir}/alsa-lib-1.2.6.1/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/597bf5f9c0904bd6c48ac3a3527685818d11246d
-cp %{_builddir}/alsa-lib-1.2.6.1/aserver/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/e5872dbffaaad55b275bdbcb8b377385c655c5bc
+cp %{_builddir}/alsa-lib-1.2.7/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/597bf5f9c0904bd6c48ac3a3527685818d11246d
+cp %{_builddir}/alsa-lib-1.2.7/aserver/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/e5872dbffaaad55b275bdbcb8b377385c655c5bc
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]

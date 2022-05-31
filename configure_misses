@@ -7,6 +7,7 @@ Configure miss: default lockless dmix
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: i686-generic-linux-gnu-file
 Configure miss: resmgr support
 Configure miss: resmgr support
 Configure miss: resmgr support
@@ -20,3 +21,5 @@ Configure miss: use of wordexp
 Configure miss: use of wordexp
 Configure miss: use of wordexp
 Configure miss: whether a statically linked program can dlopen itself
+Configure miss: x86_64-generic-linux-gnu-file
+Configure miss: x86_64-generic-linux-gnu-file
