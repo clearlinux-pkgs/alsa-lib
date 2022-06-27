@@ -6,7 +6,7 @@
 #
 Name     : alsa-lib
 Version  : 1.2.7.1
-Release  : 49
+Release  : 50
 URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.7.1.tar.bz2
 Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.7.1.tar.bz2
 Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.7.1.tar.bz2.sig
@@ -135,7 +135,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656089070
+export SOURCE_DATE_EPOCH=1656363333
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
 export FCFLAGS="$FFLAGS -Ofast -falign-functions=32 -fno-lto -fno-semantic-interposition -mprefer-vector-width=256 "
@@ -175,7 +175,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1656089070
+export SOURCE_DATE_EPOCH=1656363333
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
 cp %{_builddir}/alsa-lib-1.2.7.1/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/597bf5f9c0904bd6c48ac3a3527685818d11246d
@@ -341,6 +341,8 @@ popd
 /usr/include/alsa/version.h
 /usr/include/asoundlib.h
 /usr/include/sys/asoundlib.h
+/usr/lib64/glibc-hwcaps/x86-64-v3/libasound.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libatopology.so
 /usr/lib64/libasound.so
 /usr/lib64/libatopology.so
 /usr/lib64/pkgconfig/alsa-topology.pc
@@ -362,10 +364,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libasound.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libasound.so.2
 /usr/lib64/glibc-hwcaps/x86-64-v3/libasound.so.2.0.0
-/usr/lib64/glibc-hwcaps/x86-64-v3/libatopology.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libatopology.so.2
 /usr/lib64/glibc-hwcaps/x86-64-v3/libatopology.so.2.0.0
 /usr/lib64/libasound.so.2
