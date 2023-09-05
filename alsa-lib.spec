@@ -6,11 +6,11 @@
 # Source0 file verified with key 0x8380596DA6E59C91 (release@alsa-project.org)
 #
 Name     : alsa-lib
-Version  : 1.2.9
-Release  : 61
-URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.9.tar.bz2
-Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.9.tar.bz2
-Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.9.tar.bz2.sig
+Version  : 1.2.10
+Release  : 62
+URL      : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.10.tar.bz2
+Source0  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.10.tar.bz2
+Source1  : https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.10.tar.bz2.sig
 Summary  : Advanced Linux Sound Architecture (ALSA) - Library
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
@@ -107,14 +107,14 @@ license components for the alsa-lib package.
 
 
 %prep
-%setup -q -n alsa-lib-1.2.9
-cd %{_builddir}/alsa-lib-1.2.9
-%patch1 -p1
+%setup -q -n alsa-lib-1.2.10
+cd %{_builddir}/alsa-lib-1.2.10
+%patch -P 1 -p1
 pushd ..
-cp -a alsa-lib-1.2.9 build32
+cp -a alsa-lib-1.2.10 build32
 popd
 pushd ..
-cp -a alsa-lib-1.2.9 buildavx2
+cp -a alsa-lib-1.2.10 buildavx2
 popd
 
 %build
@@ -122,7 +122,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1685477744
+export SOURCE_DATE_EPOCH=1693924201
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -Ofast -falign-functions=32 -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -fno-semantic-interposition -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -162,7 +162,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1685477744
+export SOURCE_DATE_EPOCH=1693924201
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/alsa-lib
 cp %{_builddir}/alsa-lib-%{version}/COPYING %{buildroot}/usr/share/package-licenses/alsa-lib/597bf5f9c0904bd6c48ac3a3527685818d11246d || :
@@ -324,6 +324,8 @@ popd
 /usr/include/alsa/sound/uapi/tlv.h
 /usr/include/alsa/timer.h
 /usr/include/alsa/topology.h
+/usr/include/alsa/ump.h
+/usr/include/alsa/ump_msg.h
 /usr/include/alsa/use-case.h
 /usr/include/alsa/version.h
 /usr/include/asoundlib.h
